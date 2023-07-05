@@ -23,17 +23,24 @@ $(function () {
     }  
     });
   }
+  var buttonEl = $(".btn");
   
-  var buttonEl = document.querySelector(".btn-9");
-  var textNineEl = $("#textNine");
-    var storedNineEl = (localStorage.getItem("NineEl"));
-    console.log(JSON.parse(storedNineEl));
-    $(textNineEl).text(JSON.parse(storedNineEl));
- 
-  $(buttonEl).on("click", function (event) {
-    event.preventDefault();
-    localStorage.setItem("NineEl", JSON.stringify(textNineEl.val().trim()));
-    });
+  $(buttonEl).on("click", function () {
+  descriptionEl.each(function(){
+    var valueEl = $(this).siblings('.description').val();
+    console.log(valueEl);
+    var time = $(this).parent().attr('id');
+    console.log(time);
+    console.log(descriptionEl);
+    localStorage.setItem(time, JSON.stringify(valueEl));
+  });
+});
+//   var storedNineEl = (localStorage.getItem("NineEl"));
+//   console.log(JSON.parse(storedNineEl));
+//   $(textNineEl).text(JSON.parse(storedNineEl));
+
+  //   event.preventDefault();
+  //   });
     
   getTime();
 });
