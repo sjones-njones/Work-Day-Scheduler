@@ -1,66 +1,62 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
 $(function () {
   var today = dayjs();
   var descriptionEl = $(".description");
   currentTime = today.format("H");
   currentTimeNum = Math.floor(currentTime);
-    $("#currentDay").text(today.format("dddd, MMMM D, YYYY"));
-  
-
+  $("#currentDay").text(today.format("dddd, MMMM D, YYYY"));
+    
   function getTime(){
     descriptionEl.each(function(){
-  console.log($(".description").data("time"));
-    if (currentTimeNum === $(this).data("time")) {
-      $(this).addClass("present");
-    }
-    else if (currentTimeNum < $(this).data("time")) {
-      $(this).addClass("future");
+      console.log($(".description").data("time"));
+      if (currentTimeNum === $(this).data("time")) {
+        $(this).addClass("present");
+      }
+      else if (currentTimeNum < $(this).data("time")) {
+        $(this).addClass("future");
     }
     else {
       $(this).addClass("past");
     }  
-    });
-  }
-  var buttonEl = $(".btn");
-  
-  $(buttonEl).on("click", function () {
-  descriptionEl.each(function(){
-    var valueEl = $(this).siblings('.description').val();
+  });
+}
+
+var buttonEl = $(".btn");
+
+$(buttonEl).on("click", function () {
+  descriptionEl.each(function(i){
+    var valueEl = $(this).parent().find(descriptionEl).val();
     console.log(valueEl);
     var time = $(this).parent().attr('id');
     console.log(time);
-    console.log(descriptionEl);
+    console.log(descriptionEl[i]);
     localStorage.setItem(time, JSON.stringify(valueEl));
+    var storedNineEl = (localStorage.getItem(time));
+    console.log( JSON.parse(storedNineEl));
+    $(descriptionEl).text(JSON.parse(storedNineEl));
   });
 });
-//   var storedNineEl = (localStorage.getItem("NineEl"));
-//   console.log(JSON.parse(storedNineEl));
-//   $(textNineEl).text(JSON.parse(storedNineEl));
 
-  //   event.preventDefault();
-  //   });
-    
-  getTime();
+getTime();
 });
 
 
 
+// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
+// the code isn't run until the browser has finished rendering all the elements
+// in the html.
 //   var buttonEl = document.querySelector(".btn-9");
 //   var textNineEl = $("#textNine");
 //   // var textTenEl = $("#textTen");
 
 //   // function init() {
-//   //   if (storedNineEl !== null) {
-//   //     textNineEl = storedNineEl;
-//   //     renderToDo();
-//   //   }}
-
-//   // function renderToDo() {
+  //   //   if (storedNineEl !== null) {
+    //   //     textNineEl = storedNineEl;
+    //   //     renderToDo();
+    //   //   }}
+    
+    //   // function renderToDo() {
+      
   
-  
-//     var storedNineEl = (localStorage.getItem("NineEl"));
 //     console.log(JSON.parse(storedNineEl));
 //     $(textNineEl).text(JSON.parse(storedNineEl));
   
