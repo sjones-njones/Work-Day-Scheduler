@@ -2,33 +2,34 @@
 $(function () {
   var today = dayjs();
   var descriptionEl = $(".description");
-  currentTime = today.format("H");
-  currentTimeNum = Math.floor(currentTime);
   $("#currentDay").text(today.format("dddd, MMMM D, YYYY"));
-  
+ 
   function getTime(){
+    var now = dayjs();
+    currentTime = now.format("H");
+    currentTimeNum = Math.floor(currentTime);
     descriptionEl.each(function(){
       // console.log($(this).data("time"));
       $(this).removeClass("present past future");
       // conditional statement to change color by adding and removing classes
       if (currentTimeNum === $(this).data("time")) {
         $(this).addClass("present");
-        
+       
       }
       else if (currentTimeNum < $(this).data("time")) {
         $(this).addClass("future");
       }
       else {
         $(this).addClass("past");
-      }   
+      }  
     });
   }
-  
+ 
   setInterval(function() {
-    $("#currentDay").text(today.format("dddd, MMMM D, YYYY"));
+    $("#currentDay").text(dayjs().format("dddd, MMMM D, YYYY"));
     getTime();
-  }, 5000);
-  
+  }, 1000);
+ 
   // defining variables
   var buttonEl = $(".btn");
   $(buttonEl).on("click", function () {
@@ -53,11 +54,12 @@ $(function () {
       $(this).text(JSON.parse(storedNineEl));
     });
   }
-  
+ 
   // functions called when page loads
   getTime();
   renderItem();
 });
+
 
 
 
