@@ -1,43 +1,78 @@
+// entire code wrapped in jquery function
 $(function () {
   var today = dayjs();
   var descriptionEl = $(".description");
   currentTime = today.format("H");
   currentTimeNum = Math.floor(currentTime);
   $("#currentDay").text(today.format("dddd, MMMM D, YYYY"));
-    
+  
   function getTime(){
     descriptionEl.each(function(){
-      console.log($(".description").data("time"));
+      // console.log($(this).data("time"));
+      $(this).removeClass("present past future");
+      // conditional statement to change color by adding and removing classes
       if (currentTimeNum === $(this).data("time")) {
         $(this).addClass("present");
+        
       }
       else if (currentTimeNum < $(this).data("time")) {
         $(this).addClass("future");
-    }
-    else {
-      $(this).addClass("past");
-    }  
-  });
-}
-
-var buttonEl = $(".btn");
-
-$(buttonEl).on("click", function () {
-  descriptionEl.each(function(i){
-    var valueEl = $(this).parent().find(descriptionEl).val();
-    console.log(valueEl);
+      }
+      else {
+        $(this).addClass("past");
+      }   
+    });
+  }
+  
+  setInterval(function() {
+    $("#currentDay").text(today.format("dddd, MMMM D, YYYY"));
+    getTime();
+  }, 5000);
+  
+  // defining variables
+  var buttonEl = $(".btn");
+  $(buttonEl).on("click", function () {
+    var valueEl = $(this).siblings("textarea").val();
+    // console.log(valueEl);
     var time = $(this).parent().attr('id');
-    console.log(time);
-    console.log(descriptionEl[i]);
+    // console.log(time);
+    // console.log(descriptionEl[i]);
     localStorage.setItem(time, JSON.stringify(valueEl));
-    var storedNineEl = (localStorage.getItem(time));
-    console.log( JSON.parse(storedNineEl));
-    $(descriptionEl).text(JSON.parse(storedNineEl));
+    // renderItem();
+    // });
   });
+// this function renders items to the screen upon page reload
+  function renderItem(){
+    descriptionEl.each(function(){
+      var time = $(this).parent().attr('id');
+      var storedNineEl = (localStorage.getItem(time));
+      if (!storedNineEl) {
+        return
+      }
+      console.log( JSON.parse(storedNineEl));
+      $(this).text(JSON.parse(storedNineEl));
+    });
+  }
+  
+  // functions called when page loads
+  getTime();
+  renderItem();
 });
 
-getTime();
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
