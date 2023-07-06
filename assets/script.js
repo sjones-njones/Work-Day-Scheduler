@@ -2,11 +2,12 @@
 $(function () {
   var today = dayjs();
   var descriptionEl = $(".description");
-  currentTime = today.format("H");
-  currentTimeNum = Math.floor(currentTime);
   $("#currentDay").text(today.format("dddd, MMMM D, YYYY"));
   
   function getTime(){
+    var now = dayjs();
+    currentTime = now.format("H");
+    currentTimeNum = Math.floor(currentTime);
     descriptionEl.each(function(){
       // console.log($(this).data("time"));
       $(this).removeClass("present past future");
@@ -25,9 +26,9 @@ $(function () {
   }
   
   setInterval(function() {
-    $("#currentDay").text(today.format("dddd, MMMM D, YYYY"));
+    $("#currentDay").text(dayjs().format("dddd, MMMM D, YYYY"));
     getTime();
-  }, 5000);
+  }, 1000);
   
   // defining variables
   var buttonEl = $(".btn");
